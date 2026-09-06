@@ -11,11 +11,6 @@
 			<div class="desc">{{ $account ? $data[1] : 'Connect this account to publish through AgentHub.' }}</div>
 			<div class="platform-status {{ $account ? 'is-connected' : 'is-disconnected' }}">{{ $account ? '● Connected · publishing access enabled' : 'Not connected' }}</div>
 		</div>
-		@if($account)
-			<form method="POST" action="{{ route('social.disconnect', $account) }}">@csrf @method('DELETE')<button class="btn-sm" type="submit">Disconnect</button></form>
-		@else
-			<a class="btn-sm primary" href="{{ route('social.redirect', $platform) }}">Connect</a>
-		@endif
 	</div>
 	<div class="stats-grid">@foreach ($data[2] as $stat)<div class="stat-card"><div class="label">{{ $stat[0] }}</div><div class="value">{{ $stat[1] }}</div><div class="sub {{ $loop->last ? 'warn' : '' }}">{{ $stat[2] }}</div></div>@endforeach</div>
 	<div class="card-title page-heading"><svg width="16" height="16"><use href="#ico-{{ $platform === 'facebook' ? 'photo' : 'video' }}"/></svg> Recent {{ $platform === 'facebook' ? 'posts' : 'uploads' }}</div><div class="post-grid">@foreach (['Product teaser · Fall collection','Customer testimonial highlight reel','Studio tour with the design team'] as $post)<article class="post-tile"><div class="post-tile-thumb"><svg width="26" height="26"><use href="#ico-{{ $platform === 'facebook' ? 'photo' : 'video' }}"/></svg></div><div class="post-tile-body"><div class="title">{{ $post }}</div><div class="post-tile-stats">Views 24.1K　 Likes 1.8K</div></div></article>@endforeach</div>

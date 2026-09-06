@@ -159,11 +159,6 @@
     flex: 1
 }
 
-.plat-hero>form,
-.plat-hero>.btn-sm {
-    margin-left: auto
-}
-
 .plat-hero-icon {
     width: 48px;
     height: 48px;
