@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgentHub - AI Social Media Dashboard</title>
+    <title>AgentHub - Dashboard</title>
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @else
@@ -19,6 +19,7 @@
                     queue: ['Content queue', '7 items · 3 need review'],
                     youtube: ['YouTube', 'YouTube publishing'],
                     facebook: ['Facebook', 'Facebook publishing'],
+                    instagram: ['Instagram', 'Instagram publishing'],
                     tiktok: ['TikTok', 'TikTok publishing'],
                     connections: ['Connections', 'Manage connected social accounts'],
                     settings: ['Settings', 'Configure your AgentHub workspace'],
@@ -29,6 +30,7 @@
                     if (!titles[page]) return;
                     document.getElementById('page-title').textContent = titles[page][0];
                     document.getElementById('page-sub').textContent = titles[page][1];
+                    document.title = 'AgentHub - ' + titles[page][0];
                     document.querySelectorAll('.page-section').forEach(section => {
                         section.classList.toggle('active', section.id === 'page-' + page);
                     });
@@ -122,6 +124,7 @@
             @include('pages.queue')
             @include('pages.platform', ['platform' => 'youtube'])
             @include('pages.platform', ['platform' => 'facebook'])
+            @include('pages.platform', ['platform' => 'instagram'])
             @include('pages.platform', ['platform' => 'tiktok'])
             @include('pages.connections')
             @include('pages.settings')

@@ -5,7 +5,7 @@
         <button class="nav-item {{ $loop->first ? 'active' : '' }}" data-page="{{ $item[0] }}"><svg class="nav-icon" width="17" height="17"><use href="#{{ $item[1] }}"/></svg>{{ $item[2] }}@if($item[0] === 'queue')<span class="nav-badge">3</span>@endif</button>
     @endforeach
     <div class="nav-section-label">Publishing</div>
-    @foreach ([['youtube','ico-youtube','YouTube'],['facebook','ico-facebook','Facebook'],['tiktok','ico-tiktok','TikTok']] as $item)
+    @foreach ([['youtube','ico-youtube','YouTube'],['facebook','ico-facebook','Facebook'],['instagram','ico-instagram','Instagram'],['tiktok','ico-tiktok','TikTok']] as $item)
         <button class="nav-item" data-page="{{ $item[0] }}"><svg class="nav-icon" width="17" height="17"><use href="#{{ $item[1] }}"/></svg>{{ $item[2] }}</button>
     @endforeach
     <div class="nav-section-label">Settings</div>

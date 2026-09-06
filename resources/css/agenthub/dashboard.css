@@ -245,6 +245,19 @@
     border-bottom: 0
 }
 
+.queue-empty {
+    justify-content: center;
+    text-align: center
+}
+
+.queue-empty .qi-info {
+    flex: 0 1 auto
+}
+
+.queue-empty .meta {
+    justify-content: center
+}
+
 .thumb {
     width: 52px;
     height: 40px;
