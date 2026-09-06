@@ -155,6 +155,15 @@
     padding: 20px
 }
 
+.plat-hero-info {
+    flex: 1
+}
+
+.plat-hero>form,
+.plat-hero>.btn-sm {
+    margin-left: auto
+}
+
 .plat-hero-icon {
     width: 48px;
     height: 48px;
@@ -176,6 +185,19 @@
     font-size: 12px;
     color: var(--secondary);
     margin-top: 2px
+}
+
+.platform-status {
+    margin-top: 7px;
+    font-size: 11px
+}
+
+.platform-status.is-connected {
+    color: var(--green)
+}
+
+.platform-status.is-disconnected {
+    color: var(--muted)
 }
 
 .post-grid {

@@ -34,7 +34,7 @@ class ContentController extends Controller
 
         AnalyzeContent::dispatch($content);
 
-        return back()->with('success', 'Media uploaded. AI caption and hashtag suggestions have been queued for review.');
+        return redirect()->route('dashboard')->with('success', 'Media uploaded. AI caption and hashtag suggestions have been queued for review.');
     }
 
     public function update(Request $request, ContentItem $content): RedirectResponse
@@ -46,7 +46,7 @@ class ContentController extends Controller
         $hashtags = collect(preg_split('/[\s,]+/', trim($data['hashtags'] ?? '')))->filter()->map(fn ($tag) => str_starts_with($tag, '#') ? $tag : '#'.$tag)->values()->all();
         $content->update(['edited_caption' => $data['caption'], 'generated_hashtags' => $hashtags, 'status' => ContentItem::PENDING_REVIEW]);
 
-        return back()->with('success', 'Content changes saved.');
+        return redirect()->route('dashboard')->with('success', 'Content changes saved.');
     }
 
     public function approve(ContentItem $content): RedirectResponse
@@ -55,6 +55,6 @@ class ContentController extends Controller
         $content->update(['status' => ContentItem::APPROVED, 'approved_at' => now()]);
         PublishContent::dispatch($content);
 
-        return back()->with('success', 'Content approved and publishing has been queued.');
+        return redirect()->route('dashboard')->with('success', 'Content approved and publishing has been queued.');
     }
 }
