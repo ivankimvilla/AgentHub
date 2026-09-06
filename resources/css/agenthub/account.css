@@ -1,0 +1,125 @@
+#page-account .profile-head {
+    min-height: 60px
+}
+
+#page-account .input-status {
+    display: flex;
+    align-items: center;
+    gap: 8px
+}
+
+#page-account .input-status input {
+    flex: 1
+}
+
+#page-account .profile-note {
+    margin-bottom: 20px
+}
+
+#page-account .password-fields {
+    padding: 16px 0 2px;
+    border-bottom: 1px solid var(--border)
+}
+
+#page-account .session-block {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border)
+}
+
+#page-account .session-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px
+}
+
+#page-account .session-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px
+}
+
+#page-account .session-list>div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 12px;
+    background: var(--surface2);
+    border-radius: var(--radius)
+}
+
+#page-account .session-list b,
+#page-account .session-list small {
+    display: block
+}
+
+#page-account .session-list small {
+    color: var(--secondary);
+    font-size: 11px;
+    margin-top: 2px
+}
+
+#page-account .login-activity {
+    padding-top: 16px
+}
+
+#page-account .login-activity p {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--secondary);
+    font-size: 12px;
+    margin-top: 8px
+}
+
+#page-account .login-activity small {
+    color: var(--muted);
+    white-space: nowrap
+}
+
+#page-account .summary-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center
+}
+
+#page-account .summary-card hr {
+    width: 100%;
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin: 16px 0 4px
+}
+
+#page-account .summary-card p {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 12px;
+    color: var(--secondary);
+    margin-top: 11px
+}
+
+#page-account .summary-card strong {
+    color: var(--text)
+}
+
+#page-account .summary-card .warning {
+    color: var(--amber)
+}
+
+#page-account [hidden] {
+    display: none
+}
+
+@media (max-width: 680px) {
+    #page-account .login-activity p {
+        display: block
+    }
+
+    #page-account .login-activity small {
+        display: block;
+        margin-top: 3px
+    }
+}

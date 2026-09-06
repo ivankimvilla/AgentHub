@@ -1,0 +1,421 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    --bg: #0f1117;
+    --surface: #181c27;
+    --surface2: #1f2436;
+    --surface3: #252b3d;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.14);
+    --text: #e8eaf0;
+    --text-secondary: #8b90a0;
+    --text-muted: #555c70;
+    --accent: #6c74f7;
+    --accent-bg: rgba(108, 116, 247, 0.12);
+    --accent-text: #a5abff;
+    --green: #22c55e;
+    --green-bg: rgba(34, 197, 94, 0.1);
+    --amber: #f59e0b;
+    --amber-bg: rgba(245, 158, 11, 0.1);
+    --radius: 8px;
+    --radius-lg: 14px;
+    --strong: var(--border-strong);
+    --secondary: var(--text-secondary);
+    --muted: var(--text-muted);
+    --large: var(--radius-lg)
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0
+}
+
+body {
+    font-family: Inter, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    font-size: 14px
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit
+}
+
+button {
+    cursor: pointer;
+    color: inherit
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden
+}
+
+.topbar {
+    height: 68px;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface);
+    flex-shrink: 0
+}
+
+.topbar-left h1 {
+    font-size: 16px;
+    font-weight: 600
+}
+
+.topbar-left p {
+    font-size: 12px;
+    color: var(--secondary);
+    margin-top: 2px
+}
+
+.topbar-right {
+    display: flex;
+    gap: 8px
+}
+
+.content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px
+}
+
+.page-section {
+    display: none;
+    flex-direction: column;
+    gap: 18px
+}
+
+.page-section.active {
+    display: flex
+}
+
+.card,
+.stat-card,
+.agent-card,
+.day-col,
+.post-tile,
+.conn-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--large)
+}
+
+.card {
+    padding: 20px
+}
+
+.btn,
+.btn-sm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border: 1px solid var(--strong);
+    background: var(--surface2);
+    color: var(--text);
+    border-radius: var(--radius);
+    font-weight: 500;
+    transition: .12s
+}
+
+.btn {
+    padding: 8px 14px;
+    font-size: 13px
+}
+
+.btn-sm {
+    padding: 5px 10px;
+    font-size: 12px
+}
+
+.btn:hover,
+.btn-sm:hover {
+    background: var(--surface3)
+}
+
+.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff
+}
+
+.primary:hover {
+    background: #7b83fa
+}
+
+.stack {
+    display: flex;
+    flex-direction: column;
+    gap: 14px
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px
+}
+
+.stat-card {
+    padding: 18px
+}
+
+.stat-card .label {
+    font-size: 12px;
+    color: var(--secondary);
+    margin-bottom: 8px
+}
+
+.stat-card .value {
+    font-size: 28px;
+    font-weight: 600
+}
+
+.stat-card .sub {
+    font-size: 11px;
+    color: var(--green);
+    margin-top: 4px
+}
+
+.stat-card .warn {
+    color: var(--amber)
+}
+
+.stat-card .muted {
+    color: var(--muted)
+}
+
+.two-col {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 16px
+}
+
+.card-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px
+}
+
+.between {
+    justify-content: space-between
+}
+
+.section-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border)
+}
+
+.section-row h2 {
+    font-size: 15px
+}
+
+.section-row p {
+    font-size: 12px;
+    color: var(--secondary);
+    margin-top: 2px
+}
+
+.actions-only {
+    justify-content: flex-end;
+    border: 0;
+    padding: 0
+}
+
+.field {
+    margin-bottom: 16px
+}
+
+.form-label {
+    display: block;
+    font-size: 11px;
+    color: var(--secondary);
+    font-weight: 500;
+    margin-bottom: 6px
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--strong);
+    border-radius: var(--radius);
+    background: var(--surface2);
+    color: var(--text);
+    font-size: 13px
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px
+}
+
+.upload-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px
+}
+
+.upload-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px
+}
+
+.upload-actions .btn {
+    flex: 1;
+    min-height: 43px;
+    font-size: 14px
+}
+
+.platform-checks {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap
+}
+
+.plat-check,
+.platform-label {
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: var(--surface2);
+    border: 1px solid var(--strong);
+    color: var(--secondary)
+}
+
+.selected {
+    outline: 2px solid var(--accent);
+    color: var(--accent-text)
+}
+
+.toggle {
+    width: 38px;
+    height: 22px;
+    border-radius: 20px;
+    background: var(--surface3);
+    border: 1px solid var(--strong);
+    position: relative;
+    flex-shrink: 0
+}
+
+.toggle span {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: .15s
+}
+
+.toggle.on {
+    background: var(--accent);
+    border-color: var(--accent)
+}
+
+.toggle.on span {
+    left: 18px
+}
+
+.danger {
+    color: #f87171
+}
+
+.page-heading {
+    margin-top: 4px
+}
+
+.icon {
+    font-size: 16px
+}
+
+::-webkit-scrollbar {
+    width: 4px
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--strong);
+    border-radius: 10px
+}
+
+@media(max-width:1000px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr)
+    }
+
+    .two-col {
+        grid-template-columns: 1fr
+    }
+}
+
+@media(max-width:680px) {
+    body {
+        display: block;
+        overflow: auto
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto
+    }
+
+    .sidebar-footer {
+        display: none
+    }
+
+    .main {
+        min-height: 100vh
+    }
+
+    .topbar {
+        padding: 14px 16px
+    }
+
+    .content {
+        padding: 16px
+    }
+
+    .topbar-right .btn {
+        font-size: 0;
+        padding: 9px
+    }
+
+    .topbar-right .btn .icon {
+        font-size: 18px
+    }
+
+    .upload-form-grid {
+        grid-template-columns: 1fr
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr 1fr
+    }
+}

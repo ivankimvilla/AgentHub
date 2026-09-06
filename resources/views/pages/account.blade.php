@@ -1,0 +1,28 @@
+<section class="page-section" id="page-account">
+    <div class="two-col account-layout">
+        <div class="stack">
+            <div class="card" id="account-settings-card">
+                <div class="card-title">Profile</div>
+                <div class="profile-head"><div class="avatar large" id="acc-avatar-preview">JD</div><div><input type="file" id="acc-avatar-input" accept="image/*" hidden><button class="btn-sm" id="avatar-upload"><svg width="13" height="13"><use href="#ico-upload"/></svg> Upload photo</button><div class="helper-text">JPG or PNG, at least 200×200px</div></div></div>
+                <div class="upload-form-grid"><div class="field"><label class="form-label">Username</label><input type="text" id="acc-username" value="juandelacruz"></div><div class="field"><label class="form-label">Role / permission level</label><input type="text" value="Administrator" disabled></div></div>
+                <div class="field"><label class="form-label">Email address</label><div class="input-status"><input type="text" id="acc-email" value="juan@yourbrand.com"><span class="status-badge badge-scheduled" id="acc-email-badge">Verified</span></div><div class="helper-text" id="acc-email-hint" hidden>We'll send a verification link to confirm this address.</div></div>
+                <div class="helper-text profile-note">Roles are managed at the workspace level. To edit other members' roles, go to Connections → Team.</div>
+                <div class="modal-footer"><button class="btn primary" id="save-profile">Save profile changes</button></div>
+            </div>
+            <div class="card">
+                <div class="card-title">Security</div>
+                <div class="settings-row"><div><div class="lbl">Password</div><div class="hint">Last changed 3 months ago</div></div><button class="btn-sm" id="password-toggle">Change password</button></div>
+                <div id="password-fields" hidden class="password-fields"><div class="upload-form-grid"><div class="field"><label class="form-label">Current password</label><input type="password" placeholder="Enter current password"></div><div class="field"><label class="form-label">New password</label><input type="password" placeholder="Enter new password"></div></div><div class="field"><label class="form-label">Confirm new password</label><input type="password" placeholder="Re-enter new password"></div><div class="modal-footer"><button class="btn" id="password-cancel">Cancel</button><button class="btn primary" id="password-save">Update password</button></div></div>
+                <div class="settings-row"><div><div class="lbl">Two-factor authentication</div><div class="hint" id="twofa-hint">Add an extra layer of security using an authenticator app</div></div><button class="toggle" id="twofa-toggle" data-action="twofa"><span></span></button></div>
+                <div class="session-block"><div class="session-heading"><div class="lbl">Active sessions</div><button class="btn-sm">Log out all others</button></div><div class="session-list"><div><span><b>Chrome on Windows</b><small>This device · active now</small></span><span class="status-badge badge-scheduled">Current</span></div><div><span><b>Safari on iPhone</b><small>Last active 2 hours ago</small></span><button class="btn-sm">Log out</button></div><div><span><b>Chrome on macOS</b><small>Last active 3 days ago</small></span><button class="btn-sm">Log out</button></div></div></div>
+                <div class="login-activity"><div class="lbl">Recent login activity</div><p>Chrome on Windows · Koronadal, PH <small>Sep 5, 8:42 AM</small></p><p>Safari on iPhone · Koronadal, PH <small>Sep 3, 7:15 PM</small></p><p>Chrome on macOS · Manila, PH <small>Aug 30, 9:03 AM</small></p></div>
+            </div>
+            <div class="card"><div class="card-title">Notification preferences</div>@foreach(['Content assigned to me needs review','Mentions & comments','Connected account needs reconnection'] as $notification)<div class="settings-row"><div><div class="lbl">{{ $notification }}</div><div class="hint">Get notified about important workspace activity</div></div><button class="toggle on" data-action="toggle"><span></span></button></div>@endforeach</div>
+        </div>
+        <div class="stack">
+            <div class="card summary-card"><div class="avatar large">JD</div><b>Juan Dela Cruz</b><small>@juandelacruz</small><hr><p><span>Member since</span><strong>Jan 2026</strong></p><p><span>Two-factor auth</span><strong class="warning">Not enabled</strong></p><p><span>Active sessions</span><strong>3 devices</strong></p></div>
+            <div class="card"><div class="card-title">Workspace &amp; team</div><div class="field"><label class="form-label">Current workspace</label><input value="YourBrand" disabled></div><div class="field"><label class="form-label">My role in this workspace</label><input value="Administrator" disabled></div><div class="field"><label class="form-label">Switch workspace</label><select><option>YourBrand (current)</option><option>+ Join or create another workspace</option></select></div></div>
+            <div class="card danger-zone"><div class="card-title">Danger zone</div><div class="settings-row"><div><div class="lbl">Log out</div><div class="hint">Sign out on this device</div></div><button class="btn-sm">Log out</button></div><div class="settings-row"><div><div class="lbl">Leave workspace</div><div class="hint">Lose access to all agents &amp; content</div></div><button class="btn-sm danger">Leave</button></div><div class="settings-row"><div><div class="lbl">Delete account</div><div class="hint">Permanently remove your data</div></div><button class="btn-sm danger">Delete</button></div></div>
+        </div>
+    </div>
+</section>

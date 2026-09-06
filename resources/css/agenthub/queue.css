@@ -1,0 +1,74 @@
+#page-queue .queue-card {
+    min-height: 0;
+    padding: 24px 26px;
+    border-radius: 14px;
+}
+
+#page-queue .queue-card .card-title {
+    margin-bottom: 8px;
+    color: #f1f3fa;
+}
+
+#page-queue .queue-item {
+    min-height: 84px;
+    padding: 16px 0;
+    gap: 18px;
+}
+
+#page-queue .queue-item .thumb {
+    width: 65px;
+    height: 50px;
+    border-radius: 7px;
+    background: #202638;
+    border-color: #30384e;
+}
+
+#page-queue .qi-info .title {
+    color: #f1f3fa;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
+#page-queue .queue-platform-icons {
+    gap: 8px;
+}
+
+#page-queue .queue-platform-icons svg {
+    width: 14px;
+    height: 14px;
+}
+
+#page-queue .status-badge {
+    font-size: 11px;
+    padding: 3px 9px;
+}
+
+#page-queue .qi-actions {
+    gap: 8px;
+}
+
+#page-queue .qi-actions .btn-sm {
+    min-height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+}
+
+#page-queue .qi-actions form {
+    display: contents;
+}
+
+@media (max-width: 680px) {
+    #page-queue .queue-card {
+        padding: 18px 16px;
+    }
+
+    #page-queue .queue-item {
+        gap: 12px;
+    }
+
+    #page-queue .queue-item .thumb {
+        width: 52px;
+        height: 42px;
+    }
+}

@@ -1,0 +1,52 @@
+#page-connections .conn-card {
+    min-height: 74px;
+}
+
+#page-connections .conn-card form {
+    display: contents;
+}
+
+#page-connections .conn-card.unconnected {
+    opacity: 1;
+}
+
+#page-connections .conn-card-info .name {
+    color: #f2f4fb;
+}
+
+#page-connections .conn-card-info .meta {
+    color: #aeb7cc;
+}
+
+#page-connections a.btn-sm {
+    color: #fff;
+    background: #5963cf;
+    border-color: #6973e2;
+    text-decoration: none;
+}
+
+#page-connections a.btn-sm:hover,
+#page-connections a.btn-sm:focus-visible {
+    color: #fff;
+    text-decoration: none;
+    background: #7b83fa;
+}
+
+#page-connections .connection-error {
+    color: #fca5a5;
+    border-color: rgba(248, 113, 113, .35);
+    background: rgba(127, 29, 29, .16);
+}
+
+#page-connections .connection-note {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--secondary);
+    font-size: 12px;
+}
+
+#page-connections .connection-note strong {
+    color: var(--text);
+    white-space: nowrap;
+}

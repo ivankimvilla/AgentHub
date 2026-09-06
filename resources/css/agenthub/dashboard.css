@@ -1,0 +1,374 @@
+@import './base.css';
+@import './sidebar.css';
+@import './pages.css';
+@import './modals.css';
+@import './agents.css';
+@import './schedule.css';
+@import './queue.css';
+@import './platform.css';
+@import './connections.css';
+@import './settings.css';
+@import './account.css';
+
+.stats-grid .stat-card .label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 18px;
+    line-height: 18px;
+}
+
+.stats-grid .stat-card .label svg {
+    width: 14px;
+    height: 14px;
+    flex: 0 0 14px;
+    display: block;
+    color: var(--accent-text);
+}
+
+.stats-grid .platform-stat-sub {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 14px;
+}
+
+.stats-grid .platform-stat-sub svg {
+    width: 14px;
+    height: 14px;
+    display: block;
+    flex: 0 0 14px;
+    box-shadow: none;
+    filter: none;
+}
+
+.tag,
+.tag svg,
+.queue-platform-icons,
+.queue-platform-icons svg,
+.platform-stat-sub,
+.platform-logo,
+.platform-logo svg,
+.conn-card-icon.platform-logo {
+    box-shadow: none;
+    filter: none;
+}
+
+.tag svg,
+.queue-platform-icons svg,
+.platform-logo svg {
+    display: block;
+}
+
+.upload-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 24px;
+}
+
+.upload-card .card-title {
+    margin-bottom: 0;
+}
+
+.upload-zone {
+    border: 1.5px dashed var(--strong);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+    cursor: pointer;
+    background: none;
+    color: inherit;
+    min-height: 285px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center
+}
+
+.upload-zone:hover {
+    background: var(--surface2);
+    border-color: var(--accent)
+}
+
+.upload-icon {
+    font-size: 34px;
+    color: var(--muted)
+}
+
+.upload-zone svg {
+    display: block;
+    color: var(--text-muted)
+}
+
+.upload-zone p {
+    font-size: 13px;
+    color: var(--secondary);
+    margin: 14px 0 4px
+}
+
+.upload-zone small {
+    font-size: 11px;
+    color: var(--muted)
+}
+
+.upload-card .form-label {
+    color: var(--accent-text);
+    font-size: 12px;
+}
+
+.upload-card select {
+    min-height: 40px;
+    font-weight: 600;
+}
+
+.upload-card .platform-checks {
+    margin-top: 0;
+    min-height: 40px;
+    align-items: center;
+}
+
+.upload-card .plat-check {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 38px;
+    padding: 6px 14px;
+    color: var(--text);
+}
+
+.upload-card .plat-check.sel-yt {
+    background: rgba(255, 0, 0, .12);
+    border-color: rgba(255, 0, 0, .45);
+    color: #ff6b6b;
+}
+
+.upload-card .plat-check.sel-fb {
+    background: rgba(24, 119, 242, .12);
+    border-color: rgba(24, 119, 242, .45);
+    color: #6ca9ff;
+}
+
+.upload-card .plat-check.sel-tk {
+    background: rgba(255, 255, 255, .06);
+    border-color: rgba(255, 255, 255, .22);
+    color: var(--text);
+}
+
+.agent-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border)
+}
+
+.agent-row:last-child {
+    border-bottom: 0
+}
+
+.agent-row .tag {
+    background: transparent;
+    box-shadow: none;
+    border: 0;
+}
+
+.agent-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0
+}
+
+.dot-green {
+    background: var(--green);
+    box-shadow: 0 0 6px #22c55e80
+}
+
+.dot-blue {
+    background: #60a5fa
+}
+
+.dot-amber {
+    background: var(--amber)
+}
+
+.agent-info {
+    flex: 1
+}
+
+.agent-info .name {
+    font-size: 13px;
+    font-weight: 500
+}
+
+.agent-info .desc {
+    font-size: 11px;
+    color: var(--secondary);
+    margin-top: 2px
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 22px;
+    border-radius: 6px;
+    background: rgba(108, 116, 247, .12);
+    color: var(--accent-text)
+}
+
+.connected-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px
+}
+
+.connected-list div {
+    padding: 8px 12px;
+    border-radius: var(--radius);
+    border: 1px solid var(--strong);
+    background: var(--surface2);
+    font-size: 12px
+}
+
+.queue-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border)
+}
+
+.queue-item:last-child {
+    border-bottom: 0
+}
+
+.thumb {
+    width: 52px;
+    height: 40px;
+    border-radius: 6px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    flex-shrink: 0
+}
+
+.qi-info {
+    flex: 1
+}
+
+.qi-info .title {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 5px
+}
+
+.meta {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-wrap: wrap
+}
+
+.status-badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 600
+}
+
+.badge-review {
+    background: rgba(245, 158, 11, .1);
+    color: var(--amber)
+}
+
+.badge-scheduled {
+    background: rgba(34, 197, 94, .1);
+    color: var(--green)
+}
+
+.badge-generating {
+    background: rgba(108, 116, 247, .12);
+    color: var(--accent-text)
+}
+
+.qi-actions {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0
+}
+
+@media(max-width:680px) {
+    .queue-item {
+        align-items: flex-start
+    }
+
+    .qi-actions {
+        flex-direction: column
+    }
+
+    .queue-item .thumb {
+        display: none
+    }
+}
+
+.upload-svg {
+    color: var(--muted)
+}
+
+.connected-list div {
+    display: flex;
+    align-items: center;
+    gap: 8px
+}
+
+.connected-list div svg {
+    flex-shrink: 0
+}
+
+.queue-card .card-title>span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px
+}
+
+.queue-card {
+    padding: 24px 26px;
+}
+
+.queue-card .queue-item {
+    min-height: 84px;
+    padding: 16px 0;
+}
+
+.queue-card .thumb {
+    width: 65px;
+    height: 50px;
+}
+
+.queue-card .qi-info .title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.queue-platform-icons {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.queue-platform-icons svg {
+    width: 14px;
+    height: 14px;
+    display: block;
+    flex: 0 0 14px;
+    filter: none;
+    box-shadow: none;
+}
+
+.queue-card .qi-actions .btn-sm {
+    min-height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+}

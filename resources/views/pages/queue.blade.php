@@ -1,0 +1,1 @@
+<section class="page-section" id="page-queue">@include('partials.queue-list', ['limit' => 7])</section>
