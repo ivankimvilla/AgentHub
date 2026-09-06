@@ -1,1 +1,12 @@
+@import './agenthub/base.css';
+@import './agenthub/sidebar.css';
 @import './agenthub/dashboard.css';
+@import './agenthub/pages.css';
+@import './agenthub/modals.css';
+@import './agenthub/agents.css';
+@import './agenthub/schedule.css';
+@import './agenthub/queue.css';
+@import './agenthub/platform.css';
+@import './agenthub/connections.css';
+@import './agenthub/settings.css';
+@import './agenthub/account.css';
