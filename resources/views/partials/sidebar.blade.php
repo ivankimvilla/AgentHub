@@ -12,10 +12,4 @@
     @foreach ([['connections','ico-plug','Connections'],['settings','ico-settings','Settings']] as $item)
         <button class="nav-item" data-page="{{ $item[0] }}"><svg class="nav-icon" width="17" height="17"><use href="#{{ $item[1] }}"/></svg>{{ $item[2] }}</button>
     @endforeach
-    <div class="sidebar-footer">
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button class="user-menu-item danger" type="submit"><svg width="14" height="14"><use href="#ico-logout"/></svg> Log out</button>
-        </form>
-    </div>
 </aside>

@@ -206,7 +206,16 @@ button {
 .two-col {
     display: grid;
     grid-template-columns: 1.4fr 1fr;
-    gap: 16px
+    gap: 16px;
+    align-items: stretch
+}
+
+.two-col>.stack {
+    height: 100%
+}
+
+.two-col>.stack>.card {
+    flex: 1
 }
 
 .card-title {
@@ -372,6 +381,14 @@ textarea {
 
     .two-col {
         grid-template-columns: 1fr
+    }
+
+    .two-col>.stack {
+        height: auto
+    }
+
+    .two-col>.stack>.card {
+        flex: initial
     }
 }
 
