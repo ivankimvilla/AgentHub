@@ -11,7 +11,7 @@
 body{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 75% 46%,rgba(69,87,255,.12),transparent 34%),radial-gradient(circle at 15% 90%,rgba(108,85,255,.08),transparent 30%)}
 a{text-decoration:none;color:inherit}
-.nav{height:78px;display:flex;align-items:center;justify-content:space-between;padding:0 2.55%;background:#151b29;position:relative;z-index:20}
+.nav{height:78px;display:flex;align-items:center;justify-content:space-between;padding:0 2.55%;background:transparent;position:relative;z-index:20}
 .brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:19px;letter-spacing:-.35px;color:#fff}
 .logo{width:40px;height:40px;border-radius:10px;background:#6658f5;display:grid;place-items:center;box-shadow:none}
 .logo svg{width:23px;height:23px}
@@ -60,18 +60,17 @@ h1 .gradient{background:linear-gradient(90deg,#4ed8f4,#7b78f7,#b86cff);-webkit-b
 <body>
 <header class="nav">
   <div class="brand" aria-label="AgentHub"><span class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="11"/><path d="M8 15h.01M12 15h.01M16 15h.01" stroke-width="2.5"/></svg></span><span class="brand-name">Agent<span>Hub</span></span></div>
-  <nav class="navlinks"><a href="#features">Features</a><a href="{{ route('privacy') }}">Privacy</a><a href="{{ route('terms') }}">Terms</a></nav>
-  <div class="actions"><a class="btn nav-login" href="{{ route('dashboard') }}">Login</a><a class="btn primary" href="{{ route('dashboard') }}">Get Started</a></div>
+  <div class="actions"><a class="btn primary" href="{{ route('get-started') }}">Get Started</a></div>
 </header>
 <main class="hero">
   <section class="copy">
-    <div class="badge">&#10022; <b>Connect</b> &bull; Create &bull; Share</div>
+  <div class="badge">&#10022; <b>Connect</b> &bull; Upload &bull; One Click &bull; Share Everywhere</div>
     <h1>Manage Your<br>Social Media<br><span class="gradient">All in One Place</span></h1>
-    <p class="lead">AgentHub helps you create, schedule, and manage your content across multiple social media platforms with just one click. Save time, grow your audience, and keep your brand active effortlessly.</p>
-    <div class="features" id="features">
-      <div class="feature"><div class="ico feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13.2 2.8 5.8 13h5.1l-1.1 8.2L17.8 11h-5.1l.5-8.2Z"/></svg></div><strong>Save Time</strong><p>Post once, reach everywhere</p></div>
-      <div class="feature"><div class="ico feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19V11M10 19V6M16 19V9M22 19V3" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></div><strong>Grow Faster</strong><p>More engagement, more followers</p></div>
-      <div class="feature"><div class="ico feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 20 6v5c0 5.1-3.2 8.5-8 10-4.8-1.5-8-4.9-8-10V6l8-3Z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m8.5 12 2.2 2.2 4.8-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><strong>Secure &amp; Reliable</strong><p>Your data, always protected</p></div>
+    <p class="lead">Connect your platforms, upload your video once, and share everywhere in one click. Save time, reach your audience faster, and manage all your social media content effortlessly with AgentHub.</p>
+  <div class="features" id="features">
+      <div class="feature"><div class="ico feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 18.5h10a4 4 0 0 0 .7-7.9A6 6 0 0 0 6.1 9.3 4.5 4.5 0 0 0 7 18.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 15V8.5m0 0-2.5 2.5M12 8.5l2.5 2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><strong>Save Time</strong><p>Upload once, share everywhere</p></div>
+      <div class="feature"><div class="ico feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10.2 13.8a4 4 0 0 0 5.7 0l2.1-2.1a4 4 0 0 0-5.7-5.7l-1.2 1.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M13.8 10.2a4 4 0 0 0-5.7 0L6 12.3A4 4 0 0 0 11.7 18l1.2-1.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div><strong>Reach More</strong><p>Connect all your platforms</p></div>
+      <div class="feature"><div class="ico feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 12 16-8-5.5 16-3-6L4 12Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m11.5 14 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div><strong>One Click</strong><p>Share your video instantly</p></div>
       <div class="feature"><div class="ico feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9 10h.01M15 10h.01M8.5 14c1.8 2.2 5.2 2.2 7 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div><strong>Easy to Use</strong><p>Simple setup, powerful results</p></div>
     </div>
   </section>

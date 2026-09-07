@@ -45,13 +45,22 @@ return [
         'scopes' => ['openid', 'profile', 'email', 'https://www.googleapis.com/auth/youtube.upload'],
     ],
 
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID', env('YOUTUBE_CLIENT_ID')),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET', env('YOUTUBE_CLIENT_SECRET')),
+        'redirect' => env('GOOGLE_REDIRECT_URI', env('APP_URL').'/auth-login/google/callback'),
+        'authorize' => 'https://accounts.google.com/o/oauth2/v2/auth',
+        'token' => 'https://oauth2.googleapis.com/token',
+        'scopes' => ['openid', 'profile', 'email'],
+    ],
+
     'facebook' => [
         'client_id' => env('FACEBOOK_CLIENT_ID'),
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
         'redirect' => env('FACEBOOK_REDIRECT_URI', env('APP_URL').'/auth/facebook/callback'),
         'authorize' => 'https://www.facebook.com/v20.0/dialog/oauth',
         'token' => 'https://graph.facebook.com/v20.0/oauth/access_token',
-        'scopes' => ['pages_show_list', 'pages_manage_posts', 'pages_read_engagement'],
+        'scopes' => ['email', 'pages_show_list', 'pages_manage_posts', 'pages_read_engagement'],
     ],
 
     'instagram' => [

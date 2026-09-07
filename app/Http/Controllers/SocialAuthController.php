@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\SocialAccount;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use RuntimeException;
@@ -12,6 +14,48 @@ use RuntimeException;
 class SocialAuthController extends Controller
 {
     private array $providers = ['youtube', 'facebook', 'instagram', 'tiktok'];
+
+    private array $loginProviders = ['google', 'facebook'];
+
+    public function loginRedirect(string $platform, Request $request): RedirectResponse
+    {
+        abort_unless(in_array($platform, $this->loginProviders, true), 404);
+        $config = config("services.{$platform}");
+        abort_unless(filled($config['client_id'] ?? null) && filled($config['client_secret'] ?? null), 503, "{$platform} login is not configured.");
+
+        $state = Str::random(40);
+        $request->session()->put("social_login.{$state}", ['platform' => $platform, 'expires_at' => now()->addMinutes(10)]);
+
+        return redirect()->away($this->authorizationUrl($platform, $config, $state));
+    }
+
+    public function loginCallback(string $platform, Request $request): RedirectResponse
+    {
+        abort_unless(in_array($platform, $this->loginProviders, true), 404);
+        $state = $request->session()->pull("social_login.{$request->string('state')}");
+        abort_unless($state && $state['platform'] === $platform && now()->lessThan($state['expires_at']), 419, 'The social login session expired.');
+
+        if ($request->filled('error')) {
+            return redirect()->route('login')->withErrors(['email' => 'Social login was cancelled.']);
+        }
+
+        $token = $this->exchangeCode($platform, $request->string('code')->toString());
+        $profile = $this->loginProfile($platform, $token['access_token']);
+        if (! $profile['verified']) {
+            return redirect()->route('login')->withErrors(['email' => 'Please use a verified Google email address to continue.']);
+        }
+
+        $user = User::firstOrCreate(
+            ['email' => $profile['email']],
+            ['name' => $profile['name'], 'password' => Str::random(40)],
+        );
+        $user->forceFill(['email_verified_at' => now()])->save();
+
+        Auth::login($user, true);
+        $request->session()->regenerate();
+
+        return redirect()->intended(route('dashboard'));
+    }
 
     public function redirect(string $platform, Request $request): RedirectResponse
     {
@@ -89,7 +133,7 @@ class SocialAuthController extends Controller
         if ($platform === 'tiktok') {
             $payload['client_key'] = $config['client_id'];
             $response = Http::asForm()->post($config['token'], $payload);
-        } elseif ($platform === 'youtube') {
+        } elseif (in_array($platform, ['youtube', 'google'], true)) {
             $payload['client_id'] = $config['client_id'];
             $payload['grant_type'] = 'authorization_code';
             $response = Http::asForm()->post($config['token'], $payload);
@@ -102,6 +146,27 @@ class SocialAuthController extends Controller
                 throw new RuntimeException('The platform did not return an access token.');
             }
         });
+    }
+
+    private function loginProfile(string $platform, string $accessToken): array
+    {
+        if ($platform === 'google') {
+            $data = Http::withToken($accessToken)->get('https://www.googleapis.com/oauth2/v2/userinfo')->throw()->json();
+
+            return [
+                'name' => $data['name'] ?? 'AgentHub user',
+                'email' => $data['email'] ?? throw new RuntimeException('Google did not return an email address.'),
+                'verified' => (bool) ($data['verified_email'] ?? false),
+            ];
+        }
+
+        $data = Http::withToken($accessToken)->get('https://graph.facebook.com/v20.0/me', ['fields' => 'id,name,email'])->throw()->json();
+
+        return [
+            'name' => $data['name'] ?? 'AgentHub user',
+            'email' => $data['email'] ?? throw new RuntimeException('Facebook did not return an email address.'),
+            'verified' => true,
+        ];
     }
 
     private function profile(string $platform, array $token): array
