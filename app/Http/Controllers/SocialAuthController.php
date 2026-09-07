@@ -164,7 +164,7 @@ class SocialAuthController extends Controller
     {
         return match ($platform) {
             'instagram' => 'Instagram could not be connected. Confirm the Instagram account is a Business or Creator account linked to a Facebook Page, then try again.',
-            'facebook' => 'Facebook could not be connected. Confirm the Meta app secret and required Page permissions, then try again.',
+            'facebook' => 'Facebook could not be connected. AgentHub only supports connecting Facebook Pages. Please make sure you manage a Facebook Page and grant AgentHub the required permissions, then try again.',
             default => ucfirst($platform).' could not be connected. Check the permissions and try again.',
         };
     }
