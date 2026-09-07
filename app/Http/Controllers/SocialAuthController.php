@@ -64,7 +64,7 @@ class SocialAuthController extends Controller
             $token = $this->exchangeCode($platform, $request->string('code')->toString());
             $profile = $this->loginProfile($platform, $token['access_token']);
             if (! $profile['verified']) {
-                return redirect()->route('login')->withErrors(['email' => 'Please use a verified Google email address to continue.']);
+                return redirect()->route('login')->withErrors(['email' => 'Please use a verified '.$platform.' email address to continue.']);
             }
         } catch (Throwable $exception) {
             report($exception);
@@ -273,8 +273,8 @@ class SocialAuthController extends Controller
 
         return [
             'name' => $data['name'] ?? 'AgentHub user',
-            'email' => $data['email'] ?? throw new RuntimeException('Facebook did not return an email address.'),
-            'verified' => true,
+            'email' => $data['email'] ?? throw new RuntimeException('Facebook did not return a verified email address. Please allow email permission and try again.'),
+            'verified' => filled($data['email'] ?? null),
             'avatar_url' => $data['picture']['data']['url'] ?? null,
         ];
     }
