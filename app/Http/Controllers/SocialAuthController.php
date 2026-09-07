@@ -24,7 +24,9 @@ class SocialAuthController extends Controller
         abort_unless(in_array($platform, $this->loginProviders, true), 404);
         $config = config("services.{$platform}");
         abort_unless(filled($config['client_id'] ?? null) && filled($config['client_secret'] ?? null), 503, "{$platform} login is not configured.");
-        $config['redirect'] = $config['login_redirect'] ?? $config['redirect'];
+        $config['redirect'] = $platform === 'facebook'
+            ? $config['redirect']
+            : ($config['login_redirect'] ?? $config['redirect']);
         $config['scopes'] = $config['login_scopes'] ?? $config['scopes'];
 
         $state = Str::random(40);
@@ -123,7 +125,21 @@ class SocialAuthController extends Controller
             }
             $state ??= $request->session()->pull($stateKey);
         if (! $state || $state['platform'] !== $platform) {
-            return redirect()->route('dashboard')->with('error', 'The Facebook connection session expired. Please try again.');
+                $loginStateKey = "social_login.{$request->string('state')}";
+                try {
+                    $state = Cache::pull($loginStateKey);
+                } catch (Throwable $exception) {
+                    report($exception);
+                    $state = null;
+                }
+                $state ??= $request->session()->pull($loginStateKey);
+                if ($state && $state['platform'] === $platform) {
+                    return $this->completeLogin($platform, $request);
+                }
+
+                return $platform === 'facebook'
+                    ? redirect()->route('login')->withErrors(['email' => 'The Facebook session expired. Please try again.'])
+                    : redirect()->route('dashboard')->with('error', 'The social connection session expired. Please try again.');
         }
 
         if ($request->filled('error')) {
@@ -151,6 +167,41 @@ class SocialAuthController extends Controller
         }
 
         return redirect()->route('dashboard')->with('success', "{$profile['name']} is now connected with {$platform} publishing access.");
+    }
+
+    private function completeLogin(string $platform, Request $request): RedirectResponse
+    {
+        if ($request->filled('error')) {
+            return redirect()->route('login')->withErrors(['email' => 'Social login was cancelled.']);
+        }
+
+        try {
+            $token = $this->exchangeCode($platform, $request->string('code')->toString());
+            $profile = $this->loginProfile($platform, $token['access_token']);
+            if (! $profile['verified']) {
+                return redirect()->route('login')->withErrors(['email' => 'Please use a verified Google email address to continue.']);
+            }
+        } catch (Throwable $exception) {
+            report($exception);
+
+            return redirect()->route('login')->withErrors(['email' => ucfirst($platform).' login could not be completed. Please try again.']);
+        }
+
+        $user = User::firstOrCreate(
+            ['email' => $profile['email']],
+            ['name' => $profile['name'], 'password' => Str::random(40), 'login_provider' => $platform, 'avatar_url' => $profile['avatar_url']],
+        );
+        $user->forceFill([
+            'name' => $profile['name'],
+            'email_verified_at' => now(),
+            'login_provider' => $platform,
+            'avatar_url' => $profile['avatar_url'],
+        ])->save();
+
+        Auth::login($user, true);
+        $request->session()->regenerate();
+
+        return redirect()->intended(route('dashboard'));
     }
 
     public function disconnect(SocialAccount $account): RedirectResponse
