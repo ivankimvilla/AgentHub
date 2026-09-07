@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use RuntimeException;
+use Throwable;
 
 class SocialAuthController extends Controller
 {
@@ -26,7 +27,13 @@ class SocialAuthController extends Controller
         $config['redirect'] = $config['login_redirect'] ?? $config['redirect'];
 
         $state = Str::random(40);
-        $request->session()->put("social_login.{$state}", ['platform' => $platform, 'expires_at' => now()->addMinutes(10)]);
+        $stateData = ['platform' => $platform];
+            try {
+                Cache::put("social_login.{$state}", $stateData, now()->addMinutes(10));
+            } catch (Throwable $exception) {
+                report($exception);
+            }
+        $request->session()->put("social_login.{$state}", $stateData);
 
         return redirect()->away($this->authorizationUrl($platform, $config, $state));
     }
@@ -34,17 +41,32 @@ class SocialAuthController extends Controller
     public function loginCallback(string $platform, Request $request): RedirectResponse
     {
         abort_unless(in_array($platform, $this->loginProviders, true), 404);
-        $state = $request->session()->pull("social_login.{$request->string('state')}");
-        abort_unless($state && $state['platform'] === $platform && now()->lessThan($state['expires_at']), 419, 'The social login session expired.');
+        $stateKey = "social_login.{$request->string('state')}";
+            try {
+                $state = Cache::pull($stateKey);
+            } catch (Throwable $exception) {
+                report($exception);
+                $state = null;
+            }
+            $state ??= $request->session()->pull($stateKey);
+        if (! $state || $state['platform'] !== $platform) {
+            return redirect()->route('login')->withErrors(['email' => 'The social login session expired. Please try again.']);
+        }
 
         if ($request->filled('error')) {
             return redirect()->route('login')->withErrors(['email' => 'Social login was cancelled.']);
         }
 
-        $token = $this->exchangeCode($platform, $request->string('code')->toString());
-        $profile = $this->loginProfile($platform, $token['access_token']);
-        if (! $profile['verified']) {
-            return redirect()->route('login')->withErrors(['email' => 'Please use a verified Google email address to continue.']);
+        try {
+            $token = $this->exchangeCode($platform, $request->string('code')->toString());
+            $profile = $this->loginProfile($platform, $token['access_token']);
+            if (! $profile['verified']) {
+                return redirect()->route('login')->withErrors(['email' => 'Please use a verified Google email address to continue.']);
+            }
+        } catch (Throwable $exception) {
+            report($exception);
+
+            return redirect()->route('login')->withErrors(['email' => ucfirst($platform).' login could not be completed. Please try again.']);
         }
 
         $user = User::firstOrCreate(
@@ -71,10 +93,15 @@ class SocialAuthController extends Controller
         abort_unless(filled($config['client_id'] ?? null) && filled($config['client_secret'] ?? null), 503, "{$platform} OAuth is not configured.");
 
         $state = Str::random(40);
-        Cache::put("social_oauth.{$state}", [
-            'platform' => $platform,
-            'user_id' => auth()->id(),
-        ], now()->addMinutes(10));
+            $stateData = [
+                'platform' => $platform,
+                'user_id' => auth()->id(),
+            ];
+            try {
+                Cache::put("social_oauth.{$state}", $stateData, now()->addMinutes(10));
+            } catch (Throwable $exception) {
+                report($exception);
+            }
         $request->session()->put("social_oauth.{$state}", [
             'platform' => $platform,
             'user_id' => auth()->id(),
@@ -87,7 +114,13 @@ class SocialAuthController extends Controller
     {
         abort_unless(in_array($platform, $this->providers, true), 404);
         $stateKey = "social_oauth.{$request->string('state')}";
-        $state = Cache::pull($stateKey) ?: $request->session()->pull($stateKey);
+            try {
+                $state = Cache::pull($stateKey);
+            } catch (Throwable $exception) {
+                report($exception);
+                $state = null;
+            }
+            $state ??= $request->session()->pull($stateKey);
         if (! $state || $state['platform'] !== $platform) {
             return redirect()->route('dashboard')->with('error', 'The Facebook connection session expired. Please try again.');
         }
@@ -96,19 +129,25 @@ class SocialAuthController extends Controller
             return redirect()->route('dashboard')->with('error', 'The social account connection was cancelled.');
         }
 
-        $token = $this->exchangeCode($platform, $request->string('code')->toString());
-        $profile = $this->profile($platform, $token);
-        if (isset($profile['token'])) {
-            $token['access_token'] = $profile['token'];
-        }
+        try {
+            $token = $this->exchangeCode($platform, $request->string('code')->toString());
+            $profile = $this->profile($platform, $token);
+            if (isset($profile['token'])) {
+                $token['access_token'] = $profile['token'];
+            }
 
-        SocialAccount::updateOrCreate(
-            ['user_id' => $state['user_id'], 'platform' => $platform, 'handle' => $profile['handle']],
-            [
-                'access_token' => $token,
-                'publishing_enabled' => true,
-            ],
-        );
+            SocialAccount::updateOrCreate(
+                ['user_id' => $state['user_id'], 'platform' => $platform, 'handle' => $profile['handle']],
+                [
+                    'access_token' => $token,
+                    'publishing_enabled' => true,
+                ],
+            );
+        } catch (Throwable $exception) {
+            report($exception);
+
+            return redirect()->route('dashboard')->with('error', 'Facebook could not be connected. Check the Facebook permissions and try again.');
+        }
 
         return redirect()->route('dashboard')->with('success', "{$profile['name']} is now connected with {$platform} publishing access.");
     }
