@@ -125,11 +125,11 @@ class SocialAuthController extends Controller
             }
             $state ??= $request->session()->pull($stateKey);
         if (! $state || $state['platform'] !== $platform) {
-            return redirect()->route('dashboard')->with('error', 'The social connection session expired. Please try again.');
+                return $this->connectionsRedirect()->with('error', 'The social connection session expired. Please try again.');
         }
 
         if ($request->filled('error')) {
-            return redirect()->route('dashboard')->with('error', 'The social account connection was cancelled.');
+                return $this->connectionsRedirect()->with('error', 'The social account connection was cancelled.');
         }
 
         try {
@@ -149,10 +149,15 @@ class SocialAuthController extends Controller
         } catch (Throwable $exception) {
             report(new RuntimeException("{$platform} OAuth callback failed: {$exception->getMessage()}", 0, $exception));
 
-            return redirect()->route('dashboard')->with('error', $this->connectionErrorMessage($platform));
+            return $this->connectionsRedirect()->with('error', $this->connectionErrorMessage($platform));
         }
 
-        return redirect()->route('dashboard')->with('success', "{$profile['name']} is now connected with {$platform} publishing access.");
+        return $this->connectionsRedirect()->with('success', "{$profile['name']} is now connected with {$platform} publishing access.");
+    }
+
+    private function connectionsRedirect(): RedirectResponse
+    {
+        return redirect()->to(route('dashboard').'#connections');
     }
 
     private function connectionErrorMessage(string $platform): string
