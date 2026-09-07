@@ -47,12 +47,13 @@ class SocialAuthController extends Controller
 
         $user = User::firstOrCreate(
             ['email' => $profile['email']],
-            ['name' => $profile['name'], 'password' => Str::random(40), 'login_provider' => $platform],
+            ['name' => $profile['name'], 'password' => Str::random(40), 'login_provider' => $platform, 'avatar_url' => $profile['avatar_url']],
         );
         $user->forceFill([
             'name' => $profile['name'],
             'email_verified_at' => now(),
             'login_provider' => $platform,
+            'avatar_url' => $profile['avatar_url'],
         ])->save();
 
         Auth::login($user, true);
@@ -161,6 +162,7 @@ class SocialAuthController extends Controller
                 'name' => $data['name'] ?? 'AgentHub user',
                 'email' => $data['email'] ?? throw new RuntimeException('Google did not return an email address.'),
                 'verified' => (bool) ($data['verified_email'] ?? false),
+                'avatar_url' => $data['picture'] ?? null,
             ];
         }
 
@@ -170,6 +172,7 @@ class SocialAuthController extends Controller
             'name' => $data['name'] ?? 'AgentHub user',
             'email' => $data['email'] ?? throw new RuntimeException('Facebook did not return an email address.'),
             'verified' => true,
+            'avatar_url' => $data['picture']['data']['url'] ?? null,
         ];
     }
 

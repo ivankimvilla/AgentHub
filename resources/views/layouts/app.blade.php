@@ -119,7 +119,7 @@
                     $userInitials = collect(preg_split('/\s+/', trim($userName)))->filter()->take(2)->map(fn ($part) => strtoupper(substr($part, 0, 1)))->implode('');
                 @endphp
                 <div class="user-menu-panel"><button class="user-menu-item" data-page="account"><svg width="14" height="14"><use href="#ico-robot"/></svg> My Account</button><button class="user-menu-item" data-page="settings"><svg width="14" height="14"><use href="#ico-settings"/></svg> Settings</button></div>
-                <button class="user-pill"><div class="avatar">{{ $userInitials }}</div><div class="user-info"><div class="name">{{ $userName }}</div></div></button>
+                <button class="user-pill"><div class="avatar">@if($currentUser?->avatar_url)<img src="{{ $currentUser->avatar_url }}" alt="{{ $userName }} profile photo">@else{{ $userInitials }}@endif</div><div class="user-info"><div class="name">{{ $userName }}</div></div></button>
             </div></div>
         </header>
         <div class="content">
