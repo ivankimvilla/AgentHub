@@ -24,6 +24,6 @@ Route::get('/dashboard', DashboardController::class)->middleware('auth')->name('
 Route::post('/content', [ContentController::class, 'store'])->name('content.store');
 Route::patch('/content/{content}', [ContentController::class, 'update'])->name('content.update');
 Route::post('/content/{content}/approve', [ContentController::class, 'approve'])->name('content.approve');
-Route::get('/auth/{platform}/redirect', [SocialAuthController::class, 'redirect'])->name('social.redirect');
+Route::get('/auth/{platform}/redirect', [SocialAuthController::class, 'redirect'])->middleware('auth')->name('social.redirect');
 Route::get('/auth/{platform}/callback', [SocialAuthController::class, 'callback'])->name('social.callback');
 Route::delete('/connections/{account}', [SocialAuthController::class, 'disconnect'])->name('social.disconnect');

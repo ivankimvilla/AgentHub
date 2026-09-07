@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\SocialAccount;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -12,6 +13,8 @@ class SocialAuthTest extends TestCase
 
     public function test_configured_provider_redirect_starts_oauth_flow(): void
     {
+        $this->actingAs(User::factory()->create());
+
         config([
             'services.youtube.client_id' => 'youtube-client',
             'services.youtube.client_secret' => 'youtube-secret',
@@ -38,6 +41,8 @@ class SocialAuthTest extends TestCase
 
     public function test_instagram_uses_the_meta_oauth_flow(): void
     {
+        $this->actingAs(User::factory()->create());
+
         config([
             'services.instagram.client_id' => 'meta-client',
             'services.instagram.client_secret' => 'meta-secret',

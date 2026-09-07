@@ -75,6 +75,10 @@ class SocialAuthController extends Controller
             'platform' => $platform,
             'user_id' => auth()->id(),
         ], now()->addMinutes(10));
+        $request->session()->put("social_oauth.{$state}", [
+            'platform' => $platform,
+            'user_id' => auth()->id(),
+        ]);
 
         return redirect()->away($this->authorizationUrl($platform, $config, $state));
     }
@@ -82,7 +86,8 @@ class SocialAuthController extends Controller
     public function callback(string $platform, Request $request): RedirectResponse
     {
         abort_unless(in_array($platform, $this->providers, true), 404);
-        $state = Cache::pull("social_oauth.{$request->string('state')}");
+        $stateKey = "social_oauth.{$request->string('state')}";
+        $state = Cache::pull($stateKey) ?: $request->session()->pull($stateKey);
         if (! $state || $state['platform'] !== $platform) {
             return redirect()->route('dashboard')->with('error', 'The Facebook connection session expired. Please try again.');
         }
