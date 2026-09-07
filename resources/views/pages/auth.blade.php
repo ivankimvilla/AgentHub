@@ -14,7 +14,7 @@
         .auth-close { position:absolute; z-index:2; top:14px; right:15px; display:grid; place-items:center; width:32px; height:32px; border:1px solid rgba(255,255,255,.12); border-radius:50%; color:#b8c2d8; background:rgba(255,255,255,.04); transition:color .18s ease,background .18s ease,border-color .18s ease; }
         .auth-close:hover { border-color:rgba(255,255,255,.3); color:#fff; background:rgba(255,255,255,.1); }
         .auth-close svg { width:15px; height:15px; }
-        .auth-promo { display:none; }
+        .auth-promo { display:none; } .social.facebook { display:none; }
         .auth-promo { padding:18px 0; } .promo-eyebrow { color:#9fa8ff; font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; } .auth-promo h2 { max-width:480px; margin:14px 0 15px; font:700 clamp(38px,5vw,64px)/.98 'Space Grotesk',sans-serif; letter-spacing:-.06em; } .auth-promo h2 span { background:linear-gradient(90deg,#43d9f4,#7d75ff,#b469ff); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; } .promo-copy { max-width:440px; margin:0; color:#a1b5d5; font-size:15px; line-height:1.65; } .promo-list { display:grid; gap:10px; margin:24px 0 0; padding:0; list-style:none; color:#cbd8ee; font-size:13px; } .promo-list li { display:flex; align-items:center; gap:9px; } .promo-list li:before { content:'✓'; display:grid; place-items:center; width:20px; height:20px; border-radius:50%; color:#fff; background:linear-gradient(135deg,#756df7,#477df7); font-size:11px; }
         .auth-card { padding:28px 40px 24px; border:1px solid rgba(83,126,214,.34); border-radius:16px; background:linear-gradient(145deg,rgba(24,36,67,.82),rgba(13,23,46,.9)); box-shadow:0 22px 70px rgba(0,0,0,.3),inset 0 0 35px rgba(64,108,210,.06); }
         .card-brand { display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:15px; color:var(--ink); font:700 14px 'Space Grotesk',sans-serif; } .card-brand .mark { display:grid; place-items:center; width:25px; height:25px; border-radius:7px; color:#fff; background:#6658f5; } .mark svg { width:15px; height:15px; } .card-brand-name .brand-accent { color:#8b72ff; }
@@ -91,12 +91,12 @@
                 input.type = input.type === 'password' ? 'text' : 'password';
             });
         });
-        document.querySelectorAll('.social.facebook').forEach(button => button.addEventListener('click', () => {
-            window.location.href = @json(route('social.login.redirect', 'facebook'));
-        }));
         document.querySelectorAll('.social.google').forEach(button => button.addEventListener('click', () => {
             window.location.href = @json(route('social.login.redirect', 'google'));
         }));
+        document.querySelectorAll('.social.google').forEach(button => {
+            button.lastChild.textContent = 'Continue with Google';
+        });
     </script>
 </body>
 </html>

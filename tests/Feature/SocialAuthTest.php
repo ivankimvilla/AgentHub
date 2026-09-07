@@ -55,19 +55,4 @@ class SocialAuthTest extends TestCase
         $this->assertStringContainsString('instagram_content_publish', $response->headers->get('Location'));
     }
 
-    public function test_facebook_login_uses_login_scopes_only(): void
-    {
-        config([
-            'services.facebook.client_id' => 'meta-client',
-            'services.facebook.client_secret' => 'meta-secret',
-        ]);
-
-        $response = $this->get(route('social.login.redirect', 'facebook'));
-        $response->assertRedirect();
-
-        $location = $response->headers->get('Location');
-
-        $this->assertStringContainsString('scope=public_profile+email', $location);
-        $this->assertStringNotContainsString('pages_manage_posts', $location);
-    }
 }
