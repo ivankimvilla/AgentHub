@@ -67,7 +67,8 @@ class SocialAuthTest extends TestCase
 
         $location = $response->headers->get('Location');
 
-        $this->assertStringContainsString('scope=email+public_profile', $location);
+        $this->assertStringContainsString('scope=email', $location);
+        $this->assertStringNotContainsString('public_profile', $location);
         $this->assertStringNotContainsString('pages_manage_posts', $location);
     }
 }

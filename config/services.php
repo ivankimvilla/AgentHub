@@ -60,7 +60,7 @@ return [
         'redirect' => env('FACEBOOK_REDIRECT_URI', env('APP_URL').'/auth/facebook/callback'),
         'authorize' => 'https://www.facebook.com/v20.0/dialog/oauth',
         'token' => 'https://graph.facebook.com/v20.0/oauth/access_token',
-        'login_scopes' => ['email', 'public_profile'],
+        'login_scopes' => ['email'],
         'scopes' => ['email', 'pages_show_list', 'pages_manage_posts', 'pages_read_engagement'],
     ],
 
