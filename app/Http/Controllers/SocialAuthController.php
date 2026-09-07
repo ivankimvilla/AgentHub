@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use RuntimeException;
@@ -22,6 +23,7 @@ class SocialAuthController extends Controller
         abort_unless(in_array($platform, $this->loginProviders, true), 404);
         $config = config("services.{$platform}");
         abort_unless(filled($config['client_id'] ?? null) && filled($config['client_secret'] ?? null), 503, "{$platform} login is not configured.");
+        $config['redirect'] = $config['login_redirect'] ?? $config['redirect'];
 
         $state = Str::random(40);
         $request->session()->put("social_login.{$state}", ['platform' => $platform, 'expires_at' => now()->addMinutes(10)]);
@@ -69,7 +71,10 @@ class SocialAuthController extends Controller
         abort_unless(filled($config['client_id'] ?? null) && filled($config['client_secret'] ?? null), 503, "{$platform} OAuth is not configured.");
 
         $state = Str::random(40);
-        $request->session()->put("social_oauth.{$state}", ['platform' => $platform, 'expires_at' => now()->addMinutes(10)]);
+        Cache::put("social_oauth.{$state}", [
+            'platform' => $platform,
+            'user_id' => auth()->id(),
+        ], now()->addMinutes(10));
 
         return redirect()->away($this->authorizationUrl($platform, $config, $state));
     }
@@ -77,8 +82,10 @@ class SocialAuthController extends Controller
     public function callback(string $platform, Request $request): RedirectResponse
     {
         abort_unless(in_array($platform, $this->providers, true), 404);
-        $state = $request->session()->pull("social_oauth.{$request->string('state')}");
-        abort_unless($state && $state['platform'] === $platform && now()->lessThan($state['expires_at']), 419, 'The social authorization session expired.');
+        $state = Cache::pull("social_oauth.{$request->string('state')}");
+        if (! $state || $state['platform'] !== $platform) {
+            return redirect()->route('dashboard')->with('error', 'The Facebook connection session expired. Please try again.');
+        }
 
         if ($request->filled('error')) {
             return redirect()->route('dashboard')->with('error', 'The social account connection was cancelled.');
@@ -91,7 +98,7 @@ class SocialAuthController extends Controller
         }
 
         SocialAccount::updateOrCreate(
-            ['user_id' => auth()->id(), 'platform' => $platform, 'handle' => $profile['handle']],
+            ['user_id' => $state['user_id'], 'platform' => $platform, 'handle' => $profile['handle']],
             [
                 'access_token' => $token,
                 'publishing_enabled' => true,
