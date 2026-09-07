@@ -14,7 +14,7 @@ class DashboardController extends Controller
         return view('layouts.app', [
             'queue' => ContentItem::latest()->with('publishLogs')->get(),
             'agents' => Agent::where('active', true)->orderBy('name')->get(),
-            'socialAccounts' => SocialAccount::latest()->get(),
+            'socialAccounts' => SocialAccount::where('user_id', auth()->id())->latest()->get(),
         ]);
     }
 }

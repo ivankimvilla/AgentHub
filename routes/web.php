@@ -20,7 +20,7 @@ Route::get('/auth-login/{platform}/callback', [SocialAuthController::class, 'log
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::view('/privacy-policy', 'pages.privacy')->name('privacy');
 Route::view('/terms-of-service', 'pages.terms')->name('terms');
-Route::get('/dashboard', DashboardController::class)->name('dashboard');
+Route::get('/dashboard', DashboardController::class)->middleware('auth')->name('dashboard');
 Route::post('/content', [ContentController::class, 'store'])->name('content.store');
 Route::patch('/content/{content}', [ContentController::class, 'update'])->name('content.update');
 Route::post('/content/{content}/approve', [ContentController::class, 'approve'])->name('content.approve');

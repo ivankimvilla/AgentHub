@@ -18,7 +18,13 @@
                     <div class="agent-row"><span class="agent-dot dot-{{ $agent[2] }}"></span><div class="agent-info"><div class="name">{{ $agent[0] }}</div><div class="desc">{{ $agent[1] }}</div></div><div class="plat-tags">@foreach($agent[3] as $platform)<span class="tag tag-{{ $platform === 'youtube' ? 'yt' : ($platform === 'facebook' ? 'fb' : 'tk') }}"><svg width="13" height="13"><use href="#ico-{{ $platform }}"/></svg></span>@endforeach</div></div>
                 @endforeach
             </div>
-            <div class="card"><div class="card-title"><svg width="16" height="16"><use href="#ico-plug"/></svg> Connected accounts</div><div class="connected-list"><div><span class="conn-dot"></span><svg width="16" height="16"><use href="#ico-youtube"/></svg><span>@YourBrand_YT</span></div><div><span class="conn-dot"></span><svg width="16" height="16"><use href="#ico-facebook"/></svg><span>YourBrand Page</span></div><div><span class="conn-dot"></span><svg width="16" height="16"><use href="#ico-tiktok"/></svg><span>@yourbrand</span></div></div></div>
+            <div class="card"><div class="card-title"><svg width="16" height="16"><use href="#ico-plug"/></svg> Connected accounts</div><div class="connected-list">
+                @forelse($socialAccounts as $account)
+                    <div><span class="conn-dot"></span><svg width="16" height="16"><use href="#ico-{{ $account->platform }}"/></svg><span>{{ $account->handle }}</span></div>
+                @empty
+                    <div class="connected-empty">No connected accounts yet.</div>
+                @endforelse
+            </div></div>
         </div>
     </div>
     @include('partials.queue-list', ['limit' => 4, 'showAll' => true])

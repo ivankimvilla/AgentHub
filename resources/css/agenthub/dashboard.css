@@ -233,6 +233,11 @@
     font-size: 12px
 }
 
+.connected-list .connected-empty {
+    color: var(--secondary);
+    text-align: center
+}
+
 .queue-item {
     display: flex;
     align-items: center;
