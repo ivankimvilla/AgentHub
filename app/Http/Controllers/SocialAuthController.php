@@ -25,6 +25,7 @@ class SocialAuthController extends Controller
         $config = config("services.{$platform}");
         abort_unless(filled($config['client_id'] ?? null) && filled($config['client_secret'] ?? null), 503, "{$platform} login is not configured.");
         $config['redirect'] = $config['login_redirect'] ?? $config['redirect'];
+        $config['scopes'] = $config['login_scopes'] ?? $config['scopes'];
 
         $state = Str::random(40);
         $stateData = ['platform' => $platform];
