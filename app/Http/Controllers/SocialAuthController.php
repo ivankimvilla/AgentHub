@@ -166,7 +166,7 @@ class SocialAuthController extends Controller
             ];
         }
 
-        $data = Http::withToken($accessToken)->get('https://graph.facebook.com/v20.0/me', ['fields' => 'id,name,email'])->throw()->json();
+        $data = Http::withToken($accessToken)->get('https://graph.facebook.com/v20.0/me', ['fields' => 'id,name,email,picture.type(large)'])->throw()->json();
 
         return [
             'name' => $data['name'] ?? 'AgentHub user',
