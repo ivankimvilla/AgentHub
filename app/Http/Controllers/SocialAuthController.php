@@ -47,9 +47,13 @@ class SocialAuthController extends Controller
 
         $user = User::firstOrCreate(
             ['email' => $profile['email']],
-            ['name' => $profile['name'], 'password' => Str::random(40)],
+            ['name' => $profile['name'], 'password' => Str::random(40), 'login_provider' => $platform],
         );
-        $user->forceFill(['email_verified_at' => now()])->save();
+        $user->forceFill([
+            'name' => $profile['name'],
+            'email_verified_at' => now(),
+            'login_provider' => $platform,
+        ])->save();
 
         Auth::login($user, true);
         $request->session()->regenerate();
