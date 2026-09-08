@@ -19,7 +19,7 @@
 <div class="legal-shell">
 <nav class="legal-nav"><a class="brand" href="{{ route('home') }}" aria-label="AgentHub home"><span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="11"/><path d="M8 15h.01M12 15h.01M16 15h.01" stroke-width="2.5"/></svg></span><span>Agent<span class="brand-accent">Hub</span></span></a></nav>
 <main class="legal-page">
-<section class="intro-grid"><div class="intro-copy"><h1>Terms &amp; <span>Conditions</span></h1><h2>Clear terms for your publishing workspace.</h2><p>These terms explain how you may use AgentHub to organize, review, analyze, schedule, and publish content through connected social accounts.</p><div class="updated">Effective date: September 7, 2026</div></div></section>
+<section class="intro-grid"><div class="intro-copy"><h1>Terms &amp; <span>Conditions</span></h1><h2></h2><p>These terms explain how you may use AgentHub to organize, review, analyze, schedule, and publish content through connected social accounts.</p></div></section>
 <section class="terms-grid"><aside class="side-menu" aria-label="Terms sections"><a href="#service"><span class="menu-icon">⌂</span>Our service</a><a href="#accounts"><span class="menu-icon">♙</span>Accounts</a><a href="#content"><span class="menu-icon">▤</span>Your content</a><a href="#connections"><span class="menu-icon">↗</span>Connections</a><a href="#acceptable"><span class="menu-icon">♢</span>Acceptable use</a><a href="#availability"><span class="menu-icon">◌</span>Availability</a><a href="#termination"><span class="menu-icon">◉</span>Termination</a><a href="#contact"><span class="menu-icon">✉</span>Contact</a></aside><div class="terms-card">
 <article class="term-row" id="service"><h2>1. AgentHub service</h2><p>AgentHub provides a workspace for creating agents, uploading content, organizing a content queue, reviewing and approving posts, scheduling publishing tasks, and viewing publishing activity. Content analysis and publishing features operate according to the functionality available in your workspace and may change over time.</p></article>
 <article class="term-row" id="accounts"><h2>2. Account registration and security</h2><p>You may create an account using your email address and password. You agree to provide accurate information, keep your password confidential, and accept responsibility for activity under your account. Tell us promptly if you believe your account has been accessed without permission. You must be at least able to enter into a legally binding agreement under applicable law to use the service.</p></article>
@@ -32,9 +32,14 @@
 <article class="term-row" id="disclaimer"><h2>9. Disclaimer and limitation of liability</h2><p>To the extent permitted by applicable law, AgentHub is provided on an “as is” and “as available” basis without warranties that the service will meet every need or that a scheduled post will be published successfully. To the extent permitted by law, AgentHub is not liable for indirect, incidental, special, consequential, or lost-profit damages arising from your use of the service, including failures or decisions made by connected platforms. Nothing in these terms excludes liability that cannot legally be excluded.</p></article>
 <article class="term-row" id="changes"><h2>10. Changes to these terms</h2><p>We may update these Terms &amp; Conditions as AgentHub develops or legal requirements change. We will show the updated effective date on this page. Your continued use of AgentHub after an update means you accept the revised terms, to the extent permitted by law.</p></article>
 <article class="term-row" id="law"><h2>11. Governing law</h2><p>These terms are governed by the applicable laws of the Republic of the Philippines, unless another law is required to apply by the circumstances or by mandatory law.</p></article>
-<article class="term-row" id="contact"><h2>12. Contact us</h2><p>For questions about these terms, account deletion, or the AgentHub service, contact the AgentHub service owner through the support channel associated with your workspace. You can return to the <a href="{{ route('home') }}">AgentHub home page</a> or review our <a href="{{ route('privacy') }}">Privacy Policy</a>.</p></article>
+<article class="term-row" id="contact"><h2>12. Contact us</h2><p>For questions about these terms, account deletion, or the AgentHub service, contact the AgentHub service owner through the support channel associated with your workspace. You can also review our <a href="{{ route('privacy') }}">Privacy Policy</a>.</p></article>
 </div></section>
 </main>
 </div>
+<script>
+	document.querySelectorAll('.term-row h2').forEach((heading) => {
+		heading.textContent = heading.textContent.replace(/^\d+\.\s*/, '');
+	});
+</script>
 </body>
 </html>
